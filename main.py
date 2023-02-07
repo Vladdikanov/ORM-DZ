@@ -39,11 +39,17 @@ for i in file:
         session.commit()
 x = input("Введите имя или индификатор автора")
 if x.isdigit() != True:
-    for c in session.query(Book, Shop, Sale).join(Publisher).join(Stock).join(Shop).join(Sale).filter(Publisher.name.ilike(x)):
+    for c in session.query(Book, Shop, Sale.price, Sale.date_sale).join(Publisher).join(Stock).join(Shop).join(Sale).filter(Publisher.name.ilike(x)):
         print(c)
+        for i in c:
+            list.append(str(i))
+        print(" | ".join(list))
 else:
-    for c in session.query(Book, Shop, Sale).join(Publisher).join(Stock).join(Shop).join(Sale).filter(Publisher.id == x):
-        print(c)
+    for c in session.query(Book, Shop, Sale.price, Sale.date_sale).join(Publisher).join(Stock).join(Shop).join(Sale).filter(Publisher.id == x):
+        list = []
+        for i in c:
+            list.append(str(i))
+        print(" | ".join(list))
 # x = input("Введите имя или индификатор автора")
 # for c in session.query(Book, Shop, Sale).join(Publisher).join(Stock).join(Shop).join(Sale).filter(or_(Publisher.name.ilike(f"%{x}%"), Publisher.id == int(x))):
 #     print(c)
